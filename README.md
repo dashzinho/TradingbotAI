@@ -1,80 +1,87 @@
-🧠 Crypto Trading Bot (Binance + Ollama AI)
+Crypto Trading Bot (Binance + Ollama AI)
 
-A Python-based crypto trading bot that combines technical indicators, macro data, order book analysis, and LLM reasoning (via Ollama) to generate trading decisions in real time.
+A Python-based AI-assisted crypto trading bot that combines technical indicators, macro data, order book analysis, and LLM reasoning (via Ollama
+) to generate structured trading decisions in real time.
 
-🚀 Overview
+Overview
 
-This bot continuously monitors the Binance market and uses a local LLM model to make data-driven trading decisions such as:
+This bot continuously monitors the Binance market and uses a local LLM model to decide between:
 
-ENTER_LONG, ENTER_SHORT, CUT_LONG, CUT_SHORT, HOLD_LONG, HOLD_SHORT, HOLD_FLAT
+ENTER_LONG | ENTER_SHORT | CUT_LONG | CUT_SHORT | HOLD_LONG | HOLD_SHORT | HOLD_FLAT
 
-It runs autonomously, fetching live data, computing indicators, reading macro context, analyzing order book signals, and prompting an LLM for the next action.
 
-⚠️ Note: This version is for signal generation and research only — it does not place real trades.
+It fetches live market data, computes technical indicators, evaluates macro conditions, and queries an LLM for concise, rationale-backed trade actions.
 
-🧩 Features
+Note: This version is for research and signal generation only — it does not execute trades.
 
-📊 Multi-timeframe technical analysis (EMA, RSI, MACD, Bollinger Bands, CVD)
+Features
 
-🧠 LLM-based decision making with Ollama (llama3:8b by default)
+Multi-timeframe technical analysis (EMA, RSI, MACD, Bollinger Bands, CVD)
 
-💹 Order book volume imbalance detection
+LLM-based decision engine using Ollama (llama3:8b by default)
 
-🌍 Macro data integration via Yahoo Finance (S&P 500, NASDAQ, Gold, VIX, etc.)
+Order book imbalance and spread analysis
 
-📰 Crypto news feed via CryptoPanic
+Macro data integration (S&P 500, NASDAQ, Gold, VIX, Treasury Yield, etc.)
 
-⚙️ Configurable via .env
+Optional crypto news headlines from CryptoPanic
 
-💼 Position tracking with PnL simulation and cooldown logic
+Configurable environment and runtime parameters
 
-⚙️ Setup
-1️⃣ Clone the repository
+Position tracking with simulated leverage and PnL
+
+Installation
+1. Clone the repository
 git clone https://github.com/<your-username>/<repo-name>.git
 cd <repo-name>
 
-2️⃣ Install dependencies
+2. Install dependencies
 pip install -r requirements.txt
 
-3️⃣ Configure environment variables
+3. Configure environment variables
 
-Create a .env file in the project root:
+Create a .env file in the root directory:
 
 SYMBOL=BTCUSDT
 INTERVALS=1m,5m,15m
 TRIGGER_INTERVAL=5m
 LOOKBACK=200
 
-# LLM (Ollama)
+# Ollama LLM
 OLLAMA_URL=http://localhost:11434/api/generate
 FAST_MODEL=llama3:8b
 LLM_TEMPERATURE=0.1
 LLM_TOP_P=0.9
 
-# Thresholds
+# Logic thresholds
 CONF_THRESHOLD=90
 REFRESH_SEC=30
 MIN_BARS_BETWEEN_FLIPS=3
 
-# Starting position
+# Position tracking
 START_POSITION=FLAT
 START_ENTRY=102573
 START_LEVERAGE=10
 
-# Macro tickers
+# Macro data tickers
 MACRO_ASSETS=^GSPC,^NDX,^STOXX50E,GC=F,SI=F,^VIX,^TNX
 
-# Optional CryptoPanic key
+# Optional: CryptoPanic API key
 CRYPTOPANIC_KEY=your_api_key_here
 
-▶️ Run the Bot
+Usage
 
-Ensure your Ollama server is running (ollama serve), then start the bot:
+Start the local Ollama server:
+
+ollama serve
+
+
+Then run the bot:
 
 python bot.py
 
 
-Example output:
+Example console output:
 
 ======================================================================
 [2025-11-09T20:43:00+00:00] BTCUSDT — trading=5m — POS=FLAT @ None x10
@@ -83,12 +90,11 @@ Decision: ENTER_LONG (conf 94%) <== FLIP
 Rationale: RSI recovery; MACD bullish; order book +0.22 imbalance
 ======================================================================
 
-📈 Indicators
-Indicator	Description
-EMA(21/55)	Trend direction
-RSI(14)	Overbought / oversold
-MACD(12,26,9)	Momentum shift
-Bollinger Bands(20,2)	Volatility bands
-CVD	Volume flow bias
-Order Book	Buy/Sell imbalance
-Macro	S&P 500, Gold, VIX, etc.
+Indicators
+Category	Indicator	Description
+Trend	EMA(21/55)	Detects short/long-term trend direction
+Momentum	RSI(14), MACD(12,26,9)	Identifies overbought/oversold zones and crossovers
+Volatility	Bollinger Bands(20,2)	Measures price extremes
+Volume	CVD (Cumulative Volume Delta)	Tracks buying vs. selling pressure
+Order Flow	Bid/Ask imbalance	Detects liquidity bias
+Macro	S&P 500, Gold, VIX, etc.	Provides risk sentiment context
